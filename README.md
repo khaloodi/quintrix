@@ -1,1 +1,1 @@
-# quintrix
+# HW Assignments
