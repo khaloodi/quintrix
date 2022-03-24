@@ -7,4 +7,4 @@ Here you will find example applications and solutions to various programming pro
 
 ## Motivation
 
-Showcase example work and my capacity to using the following tools above.
+Showcase example work and my capacity to using the tools listed above.
