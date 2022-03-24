@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">About Me</string>
+    <string name="name">Khaled Adad</string>
+    <string name="yellow_star">Yellow star</string>
+    <string name="bio">
+        Hi, my name is Khaled
+        \n\nI love programming.
+        \n\nI love learning new languages and building applications from scratch in Android, Python, and definitely JavaScript.
+        \n\nFun fact is that I have german shepherd named Cece.
+        \n\nI enjoy exercising, and swimming too. Cycling. Weight-lifting. Running - not so much.
+        \nAnd sometimes I do cross fit.
+        \nAnd even less sometimes, I do mixed martial arts.
+        \n\nNow I teach a class in basic programming skills as while I am developing these small Android apps.
+        \n\nI\'ll be happy to share all of the information I have learned through Udacity, Google, and Quintrix learnings.
+        \n\nYou should ask me an interview question.
+    </string>
+    <string name="what_is_your_nickname">What is your Nickname?</string>
+    <string name="done">Done</string>
+    <string name="nickname">Nickname</string>
+</resources>
