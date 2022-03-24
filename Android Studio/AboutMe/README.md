@@ -1,1 +1,3 @@
-![Alt text](/AboutMe/RunningApp.png?raw=true "Optional Title")
+[//]:<> (![Alt text](/AboutMe/RunningApp.png?raw=true "Optional Title"))
+
+![Employee data](/quintrix/"Android Studio"/AboutMe/RunningApp.png?raw=true "Employee Data title")
