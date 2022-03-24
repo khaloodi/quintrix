@@ -1,1 +1,1 @@
-![Alt text](/RunningApp.png?raw=true "Optional Title")
+![Alt text](/RunningApp.png)
