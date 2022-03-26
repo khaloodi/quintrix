@@ -25,6 +25,7 @@
             android:ems="10"
             android:hint="@string/what_is_your_nickname"
             android:inputType="textPersonName"
+            android:minHeight="48dp"
             android:text="@string/nickname"
             android:textAlignment="center" />
 

@@ -30,9 +30,17 @@ android {
         jvmTarget = '1.8'
     }
 
+    /* OLD WAY TO ENABLE  DATA BINDING
+    dataBinding {
+        enabled = true
+    }
+     */
+
+    // CURRENT WAY TO ENABLE DATA BINDING
     buildFeatures {
         dataBinding true
     }
+
 }
 
 dependencies {
