@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     // from the name of the layout file that is activity main plus binding
     private lateinit var binding: ActivityMainBinding
 
+    private val myName: MyName = MyName(name = "Khaled Adad")
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -30,6 +32,8 @@ class MainActivity : AppCompatActivity() {
         // BINDING OBJECT WITH ALL THE MAGIC THAT CONNECTS THE LAYOUT WITH
         // THE ACTIVITY
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        binding.myName = myName
 
 
         //replace the content view above with an instruction ^^
@@ -73,7 +77,8 @@ class MainActivity : AppCompatActivity() {
 //        binding.nicknameText.visibility = View.VISIBLE
         // USING THE KOTLIN'S APPLY METHOD TO REMOVE THE REPETITIVE BINDING KEYWORD
         binding.apply {
-            nicknameText.text = binding.nicknameEdit.text
+            // nicknameText.text = binding.nicknameEdit.text
+            myName?.nickname = nicknameEdit.text.toString()
             // in order to refresh the UI with new data we have to invalidate all binding
             // expressions so the get recreated with the correct data
             invalidateAll() // we do so with this invalidateAll() method
