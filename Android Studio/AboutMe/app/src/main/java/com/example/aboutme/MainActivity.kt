@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     // the compiler specifically for this main activity, and the name is derived
     // from the name of the layout file that is activity main plus binding
     private lateinit var binding: ActivityMainBinding
-
+    // Instance of MyName data class.
     private val myName: MyName = MyName(name = "Khaled Adad")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         // WE REPLACE setContentView WITH AN INSTRUCTION TO USE THE
         // BINDING OBJECT WITH ALL THE MAGIC THAT CONNECTS THE LAYOUT WITH
         // THE ACTIVITY
+        // in other words we are using DataBindingUtil to set the content view
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         binding.myName = myName
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         // here we are accessing the done button through the binding object
         // instead of using findViewById above
         // it's generated name is doneButton
+        // Use the binding object to replace all calls to findViewById
         binding.doneButton.setOnClickListener{
             addNickname(it)
         }
