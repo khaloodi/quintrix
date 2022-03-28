@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
@@ -67,6 +68,8 @@ class MainActivity : AppCompatActivity() {
         setViewElements()
         lemonImage!!.setOnClickListener {
             clickLemonImage() // do this when lemon image is clicked
+            val toast = Toast.makeText(this, "Testing 123!", Toast.LENGTH_SHORT)
+            toast.show()
         }
         lemonImage!!.setOnLongClickListener {
             showSnackbar() // shows a nice snackbar on long press
