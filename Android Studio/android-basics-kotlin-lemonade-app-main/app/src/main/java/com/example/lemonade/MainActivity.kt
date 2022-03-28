@@ -68,8 +68,8 @@ class MainActivity : AppCompatActivity() {
         setViewElements()
         lemonImage!!.setOnClickListener {
             clickLemonImage() // do this when lemon image is clicked
-            val toast = Toast.makeText(this, "Testing 123!", Toast.LENGTH_SHORT)
-            toast.show()
+//            val toast = Toast.makeText(this, "Testing 123!", Toast.LENGTH_SHORT)
+//            toast.show()
         }
         lemonImage!!.setOnLongClickListener {
             showSnackbar() // shows a nice snackbar on long press
@@ -159,27 +159,55 @@ class MainActivity : AppCompatActivity() {
             }
         } else if (lemonadeState == DRINK) {
             lemonadeState = RESTART
-        } else  if (lemonadeState == RESTART) {
+        } else {
             lemonadeState = SELECT
         }
 
         // TODO: lastly, before the function terminates we need to set the view elements so that the
         //  UI can reflect the correct state
+        setViewElements()
     }
 
     /**
      * Set up the view elements according to the state.
      */
     private fun setViewElements() {
-        val textAction: TextView = findViewById(R.id.text_action)
+        // val textAction: TextView = findViewById(R.id.text_action)
         // TODO: set up a conditional that tracks the lemonadeState
-
         // TODO: for each state, the textAction TextView should be set to the corresponding string from
         //  the string resources file. The strings are named to match the state
-
+//        when (lemonadeState) {
+//            SELECT -> textAction.setText(R.string.lemon_select)
+//            SQUEEZE -> textAction.setText(R.string.lemon_squeeze)
+//            DRINK -> textAction.setText(R.string.lemon_drink)
+//            RESTART -> textAction.setText(R.string.lemon_empty_glass)
+//        }
         // TODO: Additionally, for each state, the lemonImage should be set to the corresponding
         //  drawable from the drawable resources. The drawables have the same names as the strings
         //  but remember that they are drawables, not strings.
+//        when (lemonadeState) {
+//            SELECT -> lemonImage?.setImageResource(R.drawable.lemon_tree)
+//            SQUEEZE -> lemonImage?.setImageResource(R.drawable.lemon_squeeze)
+//            DRINK -> lemonImage?.setImageResource(R.drawable.lemon_drink)
+//            RESTART -> lemonImage?.setImageResource(R.drawable.lemon_restart)
+//        }
+
+        // code refactor
+        when (lemonadeState) {
+            SELECT -> updateUI(R.string.lemon_squeeze, R.drawable.lemon_tree)
+            SQUEEZE -> updateUI(R.string.lemon_squeeze, R.drawable.lemon_squeeze)
+            DRINK -> updateUI(R.string.lemon_drink, R.drawable.lemon_drink)
+            RESTART -> updateUI(R.string.lemon_empty_glass, R.drawable.lemon_restart)
+        }
+    }
+
+    private fun updateUI() {
+        TODO("Not yet implemented")
+        val textAction: TextView = findViewById(R.id.text_action)
+
+        textAction.setText()
+        lemonImage?.setImageResource()
+
     }
 
     /**
