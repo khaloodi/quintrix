@@ -1,6 +1,8 @@
 package com.example.photogallery
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photogallery.api.FlickerApi
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
@@ -40,8 +44,16 @@ class PhotoGalleryFragment : Fragment() {
         val flickerApi:FlickerApi = retrofit.create(FlickerApi::class.java)
         val flickerHomePageRequest: Call<String> = flickerApi.fetchContents()
 
+        flickerHomePageRequest.enqueue(object: Callback<String> {
+            override fun onFailure (call:Call<String>, t:Throwable){
+                Log.e(TAG, "Failed to fetch photos",t)
+            }
 
-        
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                Log.d(TAG, "Response received: ${(response.body())}")
+            }
+        })
+
 
     }
 
