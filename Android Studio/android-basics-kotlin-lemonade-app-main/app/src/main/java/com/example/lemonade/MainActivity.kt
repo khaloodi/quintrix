@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
     private var lemonTree = LemonTree()
     private var lemonImage: ImageView? = null
 
+    private val textAction: TextView = findViewById(R.id.text_action)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -201,13 +202,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateUI() {
-        TODO("Not yet implemented")
-        val textAction: TextView = findViewById(R.id.text_action)
-
-        textAction.setText()
-        lemonImage?.setImageResource()
-
+    private fun updateUI(displayText: Int, displayImg: Int) { //because we are passing the addresses to the values
+        // and not the text or img themselves, they are of type Int .. e.g. the R.files..
+        textAction.setText(displayText)
+        lemonImage?.setImageResource(displayImg)
     }
 
     /**
