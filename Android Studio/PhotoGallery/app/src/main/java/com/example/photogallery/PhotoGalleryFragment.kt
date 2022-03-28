@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photogallery.api.FlickerApi
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
@@ -37,7 +38,10 @@ class PhotoGalleryFragment : Fragment() {
             .build()
 
         val flickerApi:FlickerApi = retrofit.create(FlickerApi::class.java)
+        val flickerHomePageRequest: Call<String> = flickerApi.fetchContents()
 
+
+        
 
     }
 
