@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.photogallery.api.FlickerApi
+import retrofit2.Retrofit
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,6 +31,13 @@ class PhotoGalleryFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val  retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl("https://www.flickr.com")
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .build()
+
+        val flickerApi:FlickerApi = retrofit.create(FlickerApi::class.java)
+
 
     }
 
