@@ -114,32 +114,49 @@ class MainActivity : AppCompatActivity() {
         //  - The lemonSize variable needs to be set using the 'pick()' method in the LemonTree class
         //  - The squeezeCount should be 0 since we haven't squeezed any lemons just yet.
 
-        if (lemonadeState == SELECT) {
-            lemonadeState = SQUEEZE
-            lemonSize = lemonTree.pick()
-            squeezeCount = 0
-        }
+//        if (lemonadeState == SELECT) {
+//            lemonadeState = SQUEEZE
+//            lemonSize = lemonTree.pick()
+//            squeezeCount = 0
+//        }
 
         // TODO: When the image is clicked in the SQUEEZE state the squeezeCount needs to be
         //  INCREASED by 1 and lemonSize needs to be DECREASED by 1.
         //  - If the lemonSize has reached 0, it has been juiced and the state should become DRINK
         //  - Additionally, lemonSize is no longer relevant and should be set to -1
-        if (lemonadeState == SQUEEZE) {
+//        if (lemonadeState == SQUEEZE) {
+//            squeezeCount+= 1
+//            lemonSize-= 1
+//            if (lemonSize == 0) {
+//                lemonadeState = DRINK
+//                lemonSize = -1
+//            }
+//        }
+
+        // TODO: When the image is clicked in the DRINK state the state should become RESTART
+//        if (lemonadeState == DRINK) {
+//            lemonadeState = RESTART
+//        }
+
+        // TODO: When the image is clicked in the RESTART state the state should become SELECT
+//        if (lemonadeState == RESTART) {
+//            lemonadeState = SELECT
+//        }
+
+        if (lemonadeState == SELECT) {
+            lemonadeState = SQUEEZE
+            lemonSize = lemonTree.pick()
+            squeezeCount = 0
+        } else if (lemonadeState == SQUEEZE) {
             squeezeCount+= 1
             lemonSize-= 1
             if (lemonSize == 0) {
                 lemonadeState = DRINK
                 lemonSize = -1
             }
-        }
-
-        // TODO: When the image is clicked in the DRINK state the state should become RESTART
-        if (lemonadeState == DRINK) {
+        } else if (lemonadeState == DRINK) {
             lemonadeState = RESTART
-        }
-
-        // TODO: When the image is clicked in the RESTART state the state should become SELECT
-        if (lemonadeState == RESTART) {
+        } else  if (lemonadeState == RESTART) {
             lemonadeState = SELECT
         }
 
