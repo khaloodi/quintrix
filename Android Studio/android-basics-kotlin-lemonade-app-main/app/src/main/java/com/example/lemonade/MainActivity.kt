@@ -51,8 +51,6 @@ class MainActivity : AppCompatActivity() {
     private var lemonTree = LemonTree()
     private var lemonImage: ImageView? = null
 
-    private val textAction: TextView = findViewById(R.id.text_action)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -202,8 +200,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateUI(displayText: Int, displayImg: Int) { //because we are passing the addresses to the values
+    private fun updateUI(displayText: Int, displayImg: Int) {
+        //because we are passing the addresses to the values
         // and not the text or img themselves, they are of type Int .. e.g. the R.files..
+        val textAction: TextView = findViewById(R.id.text_action)
         textAction.setText(displayText)
         lemonImage?.setImageResource(displayImg)
     }
