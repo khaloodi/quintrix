@@ -69,7 +69,8 @@ class PhotoGalleryFragment : Fragment() {
         photoRecyclerView = view.findViewById(R.id.photo_recycler_view)
         photoRecyclerView.layoutManager = GridLayoutManager(context, 3) // # of columns
 
-        return inflater.inflate(R.layout.fragment_photo_gallery, container, false)
+//        return inflater.inflate(R.layout.fragment_photo_gallery, container, false)
+        return view
     }
 
     companion object {

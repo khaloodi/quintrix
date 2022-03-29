@@ -8,4 +8,10 @@ interface FlickerApi {
     @GET("/")
     fun fetchContents():Call<String>
 
+    @GET("services/rest/?method=flickr.interestingness.getList" +
+            "&api_key=YOUR API KEY" +
+            "&format=json" +
+            "&nojsoncallback=1" + "&extras=url_s")
+    fun fetchPhotos():Call<String>
+
 }
