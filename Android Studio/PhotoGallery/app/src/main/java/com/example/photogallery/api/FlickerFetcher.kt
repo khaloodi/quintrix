@@ -23,14 +23,17 @@ class FlickrFetcher {
     init {
 
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("https://www.flickr.com")
+            .baseUrl("https://api.flickr.com")
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
         flickerApi = retrofit.create(FlickerApi::class.java)
     }
-    fun fetchContents(): LiveData<String> {
+//    fun fetchContents(): LiveData<String> {
+    fun fetchPhotos(): LiveData<String> {
         val responseLiveData: MutableLiveData<String> = MutableLiveData()
-        val flickrRequest: Call<String> = flickerApi.fetchContents()
+        val flickrRequest: Call<String> = flickerApi.fetchPhotos()
+
+
         flickrRequest.enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.e(TAG, "Failed to fetch photos", t)
