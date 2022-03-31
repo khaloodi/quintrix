@@ -1,1 +1,1 @@
-![alt text](ColorMyViewsScreenshot.png)
+![alt text](ColorMyViewsScreenshot1.png)
