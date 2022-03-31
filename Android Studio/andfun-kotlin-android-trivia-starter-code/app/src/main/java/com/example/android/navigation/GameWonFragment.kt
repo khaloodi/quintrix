@@ -23,6 +23,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import com.example.android.navigation.databinding.FragmentGameWonBinding
 
@@ -34,6 +35,7 @@ class GameWonFragment : Fragment() {
         val binding: FragmentGameWonBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_game_won, container, false)
         binding.nextMatchButton.setOnClickListener { view: View ->
+            // Replace navigation to action IDs with NavDirections in GameOverFragment, GameWonFragment, and TitleFragment
             view.findNavController().navigate(R.id.action_gameWonFragment_to_gameFragment)
         }
 
