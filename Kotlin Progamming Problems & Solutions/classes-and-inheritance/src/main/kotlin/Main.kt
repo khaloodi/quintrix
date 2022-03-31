@@ -1,5 +1,7 @@
 fun main() {
     val squareCabin = SquareCabin(6)
+    val roundHut = RoundHut(3)
+    val roundTower = RoundTower(4)
 
     with(squareCabin) {
         println("\nSquare Cabin\n============")
@@ -7,6 +9,21 @@ fun main() {
         println("Material: ${buildingMaterial}")
         println("Has room? ${hasRoom()}")
     }
+
+    with(roundHut) {
+        println("\nRound Hut\n=========")
+        println("Material: ${buildingMaterial}")
+        println("Capacity: ${capacity}")
+        println("Has room? ${hasRoom()}")
+    }
+
+    with(roundTower) {
+        println("\nRound Tower\n==========")
+        println("Material: ${buildingMaterial}")
+        println("Capacity: ${capacity}")
+        println("Has room? ${hasRoom()}")
+    }
+
 }
 
 
@@ -22,4 +39,20 @@ abstract class Dwelling(private var residents: Int) {
 class SquareCabin(residents: Int) : Dwelling(residents) {
     override val buildingMaterial = "Wood"
     override val capacity = 6
+}
+
+open class RoundHut(residents: Int) : Dwelling(residents) { // marking this with the open keyword always it to be
+    // inherited by the RoundTower Class
+    override val buildingMaterial = "Straw"
+    override val capacity = 4
+}
+
+/* Create a RoundTower class that is a subclass of RoundHut. Add the residents parameter to the
+ constructor of RoundTower, and then pass that parameter to the constructor of the RoundHut superclass.
+ */
+class RoundTower(
+    residents: Int,
+    val floors: Int = 2) : RoundHut(residents) {
+    override val buildingMaterial = "Stone"
+    override val capacity = 4 * floors
 }
