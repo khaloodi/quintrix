@@ -154,7 +154,7 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         }
         return super.onOptionsItemSelected(item)
     }
-    
+
     /** Lifecycle Methods **/
 
     override fun onStart() {
