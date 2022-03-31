@@ -101,12 +101,15 @@ class GameFragment : Fragment() {
                         // TODO find the navController from the view and then navigate to the action, gameWonFragment
                         // first call view.findNavController
                         // then navigate to R.id.action_gameFragment_to_gameWonFragment
-                        view.findNavController().navigate(R.id.action_gameFragment_to_gameWonFragment) // double check where else this is defined
-
+                        // view.findNavController().navigate(R.id.action_gameFragment_to_gameWonFragment) // double check where else this is defined
+                        view.findNavController().navigate(GameFragmentDirections.actionGameFragmentToGameWonFragment(numQuestions,
+                            questionIndex.toString()
+                        ))
                     }
                 } else {
                     // Game over! A wrong answer sends us to the gameOverFragment.
-                    view.findNavController().navigate(R.id.action_gameFragment_to_gameOverFragment2)
+                    // view.findNavController().navigate(R.id.action_gameFragment_to_gameOverFragment2)
+                    view.findNavController().navigate(GameFragmentDirections.actionGameFragmentToGameOverFragment2())
                 }
             }
         }
