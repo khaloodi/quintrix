@@ -17,32 +17,45 @@
 package com.example.android.navigation
 
 import android.os.Bundle
+import android.text.Layout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.android.navigation.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    // TODO (5. ) Add private lateinit var drawerLayout
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var appBarConfiguration: AppBarConfiguration
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         @Suppress("UNUSED_VARIABLE")
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        // initialize drawerLayout
+        drawerLayout = binding.drawerLayout
 
         // STEPS FOR ADDING SUPPORT FOR THE UP BUTTON
-        // 1. find the navController from myNavHostFragment
+        // TODO (1.) find the navController from myNavHostFragment
         val navController = this.findNavController(R.id.myNavHostFragment)
 
-        // 2. link the navController to our ActionBar
-        NavigationUI.setupActionBarWithNavController(this, navController)
+        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
 
+        // TODO (2.) link the navController to our ActionBar
+        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout) // TODO (7. ) Include drawerLayout here
+        NavigationUI.setupWithNavController(binding.navView, navController) // TODO (8. ) setup navigation UI, to know about the navigation view
 
     }
 
     override fun onSupportNavigateUp(): Boolean { // used Control + O, to override this method
-//        return super.onSupportNavigateUp()       ----- before changing its functionality with code below
+        // return super.onSupportNavigateUp()       ----- before changing its functionality with code below
         val navController = this.findNavController(R.id.myNavHostFragment)
-        return navController.navigateUp()
+        // return navController.navigateUp()
+        return NavigationUI.navigateUp(navController, appBarConfiguration) // so navigationUI can replace the up button with the navigation drawer
+        // button when we get to the start destination
     }
 }
