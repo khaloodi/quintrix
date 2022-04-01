@@ -18,6 +18,7 @@ package com.example.android.dessertpusher
 
 import android.content.ActivityNotFoundException
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -28,6 +29,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleObserver
 import com.example.android.dessertpusher.databinding.ActivityMainBinding
 import timber.log.Timber
+
+const val KEY_REVENUE = "key_revenue"
+const val KEY_DESSERT_SOLD = "key_dessert_sold"
+const val KEY_TIMER_SECONDS = "key_timer_seconds"
 
 class MainActivity : AppCompatActivity(), LifecycleObserver {
 
@@ -79,6 +84,16 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         // TODO (04) pass in 'this' MainActivity's lifecycle so that it is observed
         // Setup dessertTimer
         dessertTimer = DessertTimer(this.lifecycle) // pass in the activity's lifecycle
+
+        // TODO (03) check here if the Bundle saved instanceState is null, if it isn't, get the
+        // three values you saved and restore them: revenue, desserts sold and the timer's seconds
+        // count.. also make sure to show the correct image resource
+        if (savedInstanceState != null) {
+            revenue = savedInstanceState.getInt(KEY_REVENUE, 0)
+            dessertsSold = savedInstanceState.getInt(KEY_DESSERT_SOLD, 0)
+            dessertTimer.secondsCount = savedInstanceState.getInt(KEY_TIMER_SECONDS, 0)
+            showCurrentDessert()
+        }
 
         // Set the TextViews to the right values
         binding.revenue = revenue
@@ -143,16 +158,36 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         }
     }
 
+    // TODO (03/04)
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
+    // TODO (03/04)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.shareMenuButton -> onShare()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    /**
+     * Called when the user navigates away from the app but might come back
+     */
+    override fun onSaveInstanceState(outState: Bundle) { // Bundle is a set of key value pairs
+        // note: can use parcelables to serialize and deserialize stuff
+        // keep data under 5kb otherwise app may crash if Bundle gets to big
+        outState.putInt(KEY_REVENUE, revenue)
+        outState.putInt(KEY_DESSERT_SOLD, dessertsSold)
+        outState.putInt(KEY_TIMER_SECONDS, dessertTimer.secondsCount)
+        Timber.i("onSaveInstanceState Called")
+        super.onSaveInstanceState(outState) // remember to always call this method to save
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        Timber.i("onRestoreInstanceState Called")
     }
 
     /** Lifecycle Methods **/
