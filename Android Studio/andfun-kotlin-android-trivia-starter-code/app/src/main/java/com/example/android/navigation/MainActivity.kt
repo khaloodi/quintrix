@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -42,6 +43,16 @@ class MainActivity : AppCompatActivity() {
         // STEPS FOR ADDING SUPPORT FOR THE UP BUTTON
         // TODO (1.) find the navController from myNavHostFragment
         val navController = this.findNavController(R.id.myNavHostFragment)
+
+        // navigation listener w/in onCreate that gets called whenever the destination changes
+        // prevent nav gesture if not on start destination
+        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
+            if (nd.id == nc.graph.startDestination) {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            } else {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            }
+        }
 
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
 
