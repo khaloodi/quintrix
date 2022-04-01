@@ -76,8 +76,9 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
             onDessertClicked()
         }
 
+        // TODO (04) pass in 'this' MainActivity's lifecycle so that it is observed
         // Setup dessertTimer
-        dessertTimer = DessertTimer()
+        dessertTimer = DessertTimer(this.lifecycle) // pass in the activity's lifecycle
 
         // Set the TextViews to the right values
         binding.revenue = revenue
@@ -159,7 +160,7 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
     override fun onStart() {
         super.onStart()
         Timber.i("onStart Called")
-        dessertTimer.startTimer()
+        // dessertTimer.startTimer() --- calling this function from DessertTimer.kt using Observer pattern
     }
 
     override fun onResume() {
@@ -175,7 +176,7 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
     override fun onStop() {
         super.onStop()
         Timber.i("onStop Called")
-        dessertTimer.stopTimer()
+        // dessertTimer.stopTimer() --- calling this function from DessertTimer.kt using Observer pattern
     }
 
     override fun onDestroy() {
