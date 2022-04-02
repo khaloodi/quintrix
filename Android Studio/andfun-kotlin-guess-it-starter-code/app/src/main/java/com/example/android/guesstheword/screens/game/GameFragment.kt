@@ -104,6 +104,7 @@ class GameFragment : Fragment() {
         // val action = GameFragmentDirections.actionGameToScore(score)
         // val action = GameFragmentDirections.actionGameToScore(viewModel.score) todo have to change this b/c score is a live data now
         val action = GameFragmentDirections.actionGameToScore(viewModel.score.value ?: 0 ) // says if score is ever null, which it never should be, to pass in 0
+//        acton.setScore(currentScore)
         findNavController(this).navigate(action)
         Toast.makeText(this.activity, "Game has finished", Toast.LENGTH_SHORT).show()
     }
