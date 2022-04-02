@@ -23,6 +23,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment.findNavController
@@ -57,16 +58,29 @@ class GameFragment : Fragment() {
         // have to call viewModel version
         binding.correctButton.setOnClickListener {
             viewModel.onCorrect()
-            updateScoreText()
-            updateWordText()
+            // updateScoreText() todo this was removed after we created the viewModel and passed in the observer object
+            // updateWordText() todo this was removed after we created the viewModel and passed in the observer object
         }
         binding.skipButton.setOnClickListener {
             viewModel.onSkip()
-            updateScoreText()
-            updateWordText()
+            // updateScoreText() todo this was removed after we created the viewModel and passed in the observer object
+            // updateWordText() todo this was removed after we created the viewModel and passed in the observer object
         }
-        updateScoreText()
-        updateWordText()
+
+        // TODO () pass in viewModel w/observe... observe takes two things, first is a lifecycle owner,
+        //  the UI controller that's associated with the life data... -we pass in this or the fragment itself
+        //  second is an anonymous observer object, which is essentially the code that is going to get triggered
+        //  any time the live data changes
+        viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
+            binding.scoreText.text = newScore.toString()
+        })
+
+        viewModel.word.observe(viewLifecycleOwner, Observer { newWord ->
+            binding.wordText.text = newWord
+        })
+
+        // updateScoreText() todo this was removed after we created the viewModel and passed in the observer object
+        // updateWordText() todo this was removed after we created the viewModel and passed in the observer object
         return binding.root
 
     }
@@ -78,7 +92,8 @@ class GameFragment : Fragment() {
      */
     private fun gameFinished() {
         // val action = GameFragmentDirections.actionGameToScore(score)
-        val action = GameFragmentDirections.actionGameToScore(viewModel.score)
+        // val action = GameFragmentDirections.actionGameToScore(viewModel.score) todo have to change this b/c score is a live data now
+        val action = GameFragmentDirections.actionGameToScore(viewModel.score.value ?: 0 ) // says if score is ever null, which it never should be, to pass in 0
         findNavController(this).navigate(action)
     }
 
@@ -96,8 +111,8 @@ class GameFragment : Fragment() {
 //        nextWord()
 //    }
 
-    /** Methods for updating the UI **/
-
+    /** Methods for updating the UI
+    TODO THE BINDING intiializations get moved into the observer above
     private fun updateWordText() {
         // binding.wordText.text = word
         binding.wordText.text = viewModel.word
@@ -108,4 +123,5 @@ class GameFragment : Fragment() {
         // binding.scoreText.text = score.toString()
         binding.scoreText.text = viewModel.score.toString()
     }
+     **/
 }
