@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         // setContentView(R.layout.activity_main) --- replace this with binding.root
         // You may recall the idea of parent views and child views; the root connects to all of them.
         //
-        //Now when you need a reference to a View in your app, you can get it from t
+        // Now when you need a reference to a View in your app, you can get it from t
         // he binding object instead of calling findViewById(). The binding object automatically
         // defines references for every View in your app that has an ID. Using view binding is so
         // much more concise that often you won't even need to create a variable to hold the reference
