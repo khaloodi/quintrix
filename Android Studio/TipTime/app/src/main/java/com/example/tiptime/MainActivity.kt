@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.RadioGroup
 import com.example.tiptime.databinding.ActivityMainBinding
+import java.text.NumberFormat
 
 class MainActivity : AppCompatActivity() {
 
@@ -72,15 +73,31 @@ class MainActivity : AppCompatActivity() {
          */
         val stringInTextField = binding.costOfService.text.toString()
         // Now stringInTextField.toDouble() will work.
-        val cost = stringInTextField.toDouble()
+        // val cost = stringInTextField.toDouble()
+        // TODO ^^^ (08) After running app in debug mode and seeing that it crashes when a null value
+        //  is entered into editText field, b/c the toDouble() method throws a "NumberFormatException"
+        //  to handle this, we implement Kotlins "toDoubleOrNull()" method
+        val cost = stringInTextField.toDoubleOrNull()
+
+        // TODO (08)
+        if(cost == null || cost == 0.0) {
+            // TODO (09) Handle another bug where user enters an amount, hits calculate, clears the amount and hits calculate again,
+                //  todo --- the problem is that the previous tip amount will still show, the following line resets value to empty string
+            binding.tipResult.text = ""
+                // todo (10/bonus) refactor
+            // displayTip(0.0)
+            // todo (10/bonus) move lines (STEP1/STEP2) into their own helper function "displayTip"
+            //  use that to display a tip amount of "$0.00" instead of an empty string
+            return
+        }
 
         // TODO (04) get the checkedRadioButtonId attribute of the tipOptions RadioGroup,
         //  and assign it to a variable called selectedId
-        val selectedId = binding.tipOptions.checkedRadioButtonId
+        // val selectedId = binding.tipOptions.checkedRadioButtonId
         // ^^^ Now you know which RadioButton was selected
         // TODO (4.5) get the associated decimal value and store it in a variable tipPercentage
         // but you need the corresponding percentage:
-        val tipPercentage = when (selectedId) {
+        val tipPercentage = when (binding.tipOptions.checkedRadioButtonId) {
             R.id.option_twenty_percent -> 0.20
             R.id.option_eighteen_percent -> 0.18
             else -> 0.15
@@ -100,5 +117,23 @@ class MainActivity : AppCompatActivity() {
         if (roundUp) {
             tip = kotlin.math.ceil(tip)
         }
+
+        // TODO (06) format currency
+        val formattedTip = NumberFormat.getCurrencyInstance().format(tip)
+        // todo (10/bonus) refactor ^^^ STEP 1
+
+        // TODO (07) display the text, change the following in strings.xml: <string name="tip_amount">Tip Amount: %s</string>
+        //  The %s is where the formatted currency will be inserted. Then,
+        //  set the text of the tipResult, call getString(R.string.tip_amount, formattedTip) and
+        //  assign that to the text attribute of the tip result TextView
+        binding.tipResult.text = getString(R.string.tip_amount, formattedTip)
+        // todo (10/bonus) refactor ^^^^ STEP 2
     }
+
+    // todo (10/bonus) refactor: move lines (STEP1/STEP2) into their own helper function and reference them
+//    private fun displayTip(tip : Double) {
+//        val formattedTip = NumberFormat.getCurrencyInstance().format(tip)
+//        binding.tipResult.text = getString(R.string.tip_amount, formattedTip)
+//    }         --------- TOOK THIS HELPER FUNCTION OUT
+
 }
