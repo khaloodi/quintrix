@@ -1,5 +1,7 @@
 package com.example.android.guesstheword.screens.game
 
+import android.os.CountDownTimer
+import android.text.format.DateUtils
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,6 +9,23 @@ import androidx.lifecycle.ViewModel
 
 // TODO (00) create the GameViewModel class, extending ViewModel
 class GameViewModel : ViewModel() {
+
+    companion object {
+        // These represent different important times
+        // This is when the game is over
+        const val DONE = 0L
+        // This is the number of milliseconds in a second
+        const val ONE_SECOND = 1000L
+        // This is the total time of the game
+        const val COUNTDOWN_TIME = 60000L // set to 60 seconds
+    }
+
+    private val timer: CountDownTimer
+
+    private val _currentTime = MutableLiveData<Long>()
+    val currentTime: LiveData<Long>
+        get() = _currentTime
+
     // TODO (00) Move over the word, score and wordList variables to the GameViewModel
     //  and remove private keyword
     // The current word
@@ -35,6 +54,7 @@ class GameViewModel : ViewModel() {
     val eventGameFinish: LiveData<Boolean>
         get() = _eventGameFinish
 
+
     // TODO (00) Add init and override onCleared; Add log statements to both
     init {
         Log.i("GameViewModel", "GameViewModel created!")
@@ -47,6 +67,24 @@ class GameViewModel : ViewModel() {
         _score.value = 0
         // word.value = ""
         // _word.value = ""
+
+        // creates a timer object which triggers the end of the game when it finishes
+        timer = object : CountDownTimer(COUNTDOWN_TIME, ONE_SECOND) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                // TODO implement what should happen each tick of the timer
+                _currentTime.value = (millisUntilFinished / ONE_SECOND)
+            }
+
+            override fun onFinish() {
+                // TODO implement what should happen when the timer finishes
+                _currentTime.value = DONE
+                _eventGameFinish.value = true
+            }
+        }
+
+        // DateUtils.formatElapsedTime(newTime)
+        timer.start()
     }
 
     /**
@@ -86,11 +124,13 @@ class GameViewModel : ViewModel() {
         //Select and remove a word from the list
         if (wordList.isEmpty()) {
             // gameFinished()
-            _eventGameFinish.value = true
-        } else {
-            // word.value = wordList.removeAt(0)
-            _word.value = wordList.removeAt(0)
-        }
+            // _eventGameFinish.value = true
+            // todo instead of ^ ending the game... reset the word list
+            resetList()
+        } // else {
+        // word.value = wordList.removeAt(0)
+        _word.value = wordList.removeAt(0)
+        // }
         // TODO Removed these two methods from GameViewModel.kt, they are in GameFragment.kt
         // updateWordText()
         // updateScoreText()
@@ -120,6 +160,8 @@ class GameViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
+        // To avoid memory leaks, you should always cancel a CountDownTimer if you no longer need it:
+        timer.cancel()
         Log.i("GameViewModel", "hi from onCleared")
     }
 }
