@@ -22,15 +22,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.android.guesstheword.R
 import com.example.android.guesstheword.databinding.ScoreFragmentBinding
+import com.example.android.guesstheword.screens.game.GameViewModel
 
 /**
  * Fragment where the final score is shown, after the game is over
  */
 class ScoreFragment : Fragment() {
+
+    private lateinit var viewModel: ScoreViewModel
+    private lateinit var viewModelFactory: ScoreViewModelFactory
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -46,15 +53,40 @@ class ScoreFragment : Fragment() {
                 false
         )
 
+        // TODO (04) Create and construct a ScoreViewModelFactory
+        // TODO (05) Create ScoreViewModel by using ViewModelProviders.of as usual, except also
+
+
         // Get args using by navArgs property delegate
         val scoreFragmentArgs by navArgs<ScoreFragmentArgs>()
-        binding.scoreText.text = scoreFragmentArgs.score.toString()
-        binding.playAgainButton.setOnClickListener { onPlayAgain() }
+        
+        // binding.scoreText.text = scoreFragmentArgs.score.toString()
+        // binding.playAgainButton.setOnClickListener { onPlayAgain() }
+
+        // pass in your ScoreViewModelFactory
+        viewModelFactory = ScoreViewModelFactory(scoreFragmentArgs.score)
+        viewModel = ViewModelProvider(this, viewModelFactory)
+            .get(ScoreViewModel::class.java)
+
+        // todo this line is critical for setting up view model:
+        binding.scoreViewModel = viewModel
+
+        viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
+            binding.scoreText.text = newScore.toString()
+        })
+
+        // todo ... removed this b/c added in XML file as data
+        // binding.playAgainButton.setOnClickListener { viewModel.onPlayAgain() }
+
+        // Navigates back to title when button is pressed
+        viewModel.eventPlayAgain.observe(viewLifecycleOwner, Observer { playAgain ->
+            if (playAgain) {
+                findNavController().navigate(ScoreFragmentDirections.actionRestart())
+                viewModel.onPlayAgainComplete()
+            }
+        })
+
 
         return binding.root
-    }
-
-    private fun onPlayAgain() {
-        findNavController().navigate(ScoreFragmentDirections.actionRestart())
     }
 }

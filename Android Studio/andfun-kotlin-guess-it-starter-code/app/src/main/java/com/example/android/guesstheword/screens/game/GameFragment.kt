@@ -52,11 +52,13 @@ class GameFragment : Fragment() {
                 false
         )
 
+        // Get the view model
         Log.i("GameFragment", "Called ViewModelProvider!")
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
 
+        binding.gameViewModel = viewModel
 
-
+        /** ON CLICK LISTENERS ARE REMOVED BECAUSE THEY ARE LAMBDAS IN THE XML NOW
         //binding.correctButton.setOnClickListener { onCorrect() }
         //binding.skipButton.setOnClickListener { onSkip() }
         // have to call viewModel version
@@ -70,6 +72,7 @@ class GameFragment : Fragment() {
             // updateScoreText() todo this was removed after we created the viewModel and passed in the observer object
             // updateWordText() todo this was removed after we created the viewModel and passed in the observer object
         }
+        */
 
         // TODO () pass in viewModel w/observe... observe takes two things, first is a lifecycle owner,
         //  the UI controller that's associated with the life data... -we pass in this or the fragment itself
