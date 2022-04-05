@@ -17,4 +17,33 @@
 
 package com.example.android.marsrealestate.network
 
+import kotlinx.coroutines.Deferred
+import retrofit2.Call
+import retrofit2.Retrofit
+import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Query
+
 private const val BASE_URL = "https://mars.udacity.com/"
+// this file contains the Network Layer, the API that the ViewModel uses to communicate w/web service
+
+// todo Use Retrofit.Builder to create the Retrofit object.
+private val retrofit = Retrofit.Builder()
+    .addConverterFactory(ScalarsConverterFactory.create())
+    .baseUrl(BASE_URL)
+    .build()
+
+// Create a MarsApiService interface, and define a getProperties() method to request the JSON response string
+interface MarsApiService {
+    @GET("realestate")
+    fun getProperties():
+            Call<String>
+}
+
+// Passing in the service API you just defined, create a public object called MarsApi to expose
+// the Retrofit service to the rest of the app:
+object MarsApi {
+    val retrofitService : MarsApiService by lazy {
+        retrofit.create(MarsApiService::class.java)
+    }
+}
