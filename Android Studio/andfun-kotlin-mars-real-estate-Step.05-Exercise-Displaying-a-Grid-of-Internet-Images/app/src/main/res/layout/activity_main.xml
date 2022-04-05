@@ -17,22 +17,11 @@
   ~
   -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-    <data>
-        <!-- TODO (03) Switch from using viewModel to MarsProperty type -->
-        <variable
-            name="viewModel"
-            type="com.example.android.marsrealestate.overview.OverviewViewModel" />
-    </data>
-    <ImageView
-        android:id="@+id/mars_image"
-        android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
-        android:padding="2dp"
-        app:imageUrl="@{viewModel.property.imgSrcUrl}"
-        tools:src="@tools:sample/backgrounds/scenic"/>
-</layout>
+    android:id="@+id/nav_host_fragment"
+    android:name="androidx.navigation.fragment.NavHostFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:defaultNavHost="true"
+    app:navGraph="@navigation/nav_graph" />
