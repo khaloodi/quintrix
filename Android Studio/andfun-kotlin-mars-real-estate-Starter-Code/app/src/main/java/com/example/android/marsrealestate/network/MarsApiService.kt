@@ -17,33 +17,47 @@
 
 package com.example.android.marsrealestate.network
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+
 private const val BASE_URL = "https://mars.udacity.com/"
 // this file contains the Network Layer, the API that the ViewModel uses to communicate w/web service
 
+// todo Use Moshi Builder to create a Moshi object with the KotlinJsonAdapterFactory
+//  for Moshi's annotations to work properly w/Kotlin
+private val moshi = Moshi.Builder()
+    .add(KotlinJsonAdapterFactory())
+    .build()
+
 // todo Use Retrofit.Builder to create the Retrofit object.
 private val retrofit = Retrofit.Builder()
-    .addConverterFactory(ScalarsConverterFactory.create())
+    // .addConverterFactory(ScalarsConverterFactory.create()) // lets retrofit now how to turn a json response into a string
+    .addConverterFactory(MoshiConverterFactory.create(moshi))// todo Let retrofit know to convert the response into Kotlin objects
     .baseUrl(BASE_URL)
-    .build()
+    .build() // creates the retrofit object
 
 // Create a MarsApiService interface, and define a getProperties() method to request the JSON response string
 interface MarsApiService {
     @GET("realestate")
     fun getProperties():
-            Call<String>
+            // todo After adding Moshi, ask retrofit to return a list of mars property objects from json
+            //  array, instead of returning a Json string
+            // Call<String>
+            Call<List<MarsProperty>>
 }
 
 // Passing in the service API you just defined, create a public object called MarsApi to expose
 // the Retrofit service to the rest of the app:
 object MarsApi {
     val retrofitService : MarsApiService by lazy {
-        retrofit.create(MarsApiService::class.java)
+        retrofit.create(MarsApiService::class.java) // initialization
     }
 }
