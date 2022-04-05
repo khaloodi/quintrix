@@ -75,5 +75,18 @@ class OverviewViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Side Note:
+     *
+     * Remember, creating own scope is no longer recommended by Google.
+     * Therefore, it is not required to add variable for a coroutine Job and a
+     * CoroutineScope using the Main Dispatcher anymore. Instead, you can use the default
+     * viewModelScope:
+    // Not required
+    // private var viewModelJob = Job()
+    // private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.
+    
+     Now you just use viewModelScope.launch instead of lines above ^^^
+     */
 
 }

@@ -43,6 +43,7 @@ private val retrofit = Retrofit.Builder()
     // .addConverterFactory(ScalarsConverterFactory.create()) // lets retrofit now how to turn a json response into a string
     .addConverterFactory(MoshiConverterFactory.create(moshi))// todo Let retrofit know to convert the response into Kotlin objects
     .addCallAdapterFactory(CoroutineCallAdapterFactory()) // todo enable a coroutine based api, e.g. return something other than the default call class
+    // this line may be deprecated ^^^/ unnecessary
     .baseUrl(BASE_URL)
     .build() // creates the retrofit object
 
