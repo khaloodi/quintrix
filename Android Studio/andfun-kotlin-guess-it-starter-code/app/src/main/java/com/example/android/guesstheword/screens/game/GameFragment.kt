@@ -18,13 +18,17 @@
 
 package com.example.android.guesstheword.screens.game
 
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.text.format.DateUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -59,6 +63,9 @@ class GameFragment : Fragment() {
         // Set the viewmodel for data binding - this allows the bound layout access to all of the
         // data in the ViewModel
         binding.gameViewModel = viewModel // binding viewModel to layout
+
+        // Specify the current activity as the lifecycle owner of the binding. This is used so that
+        // the binding can observe LiveData updates
         binding.setLifecycleOwner(this) // allows us to use data binding to automatically update our layout
 
         /** ON CLICK LISTENERS ARE REMOVED BECAUSE THEY ARE LAMBDAS IN THE XML NOW
@@ -107,11 +114,21 @@ class GameFragment : Fragment() {
 
         })
         */
-
+        // Sets up event listening to navigate the player when the game is finished
         viewModel.eventGameFinish.observe(viewLifecycleOwner, Observer { hasFinished ->
             if (hasFinished) {
-                gameFinished()
+                val currentScore = viewModel.score.value ?: 0
+                val action = GameFragmentDirections.actionGameToScore(currentScore)
+                findNavController(this).navigate(action)
                 viewModel.onGameFinishComplete()
+            }
+        })
+
+        // Buzzes when triggered with different buzz events
+        viewModel.eventBuzz.observe(viewLifecycleOwner, Observer { buzzType ->
+            if (buzzType != GameViewModel.BuzzType.NO_BUZZ) {
+                buzz(buzzType.pattern)
+                viewModel.onBuzzComplete()
             }
         })
 
@@ -121,21 +138,32 @@ class GameFragment : Fragment() {
 
     }
 
+    private fun buzz(pattern: LongArray) {
+        val buzzer = activity?.getSystemService<Vibrator>()
 
+        buzzer?.let {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                buzzer.vibrate(VibrationEffect.createWaveform(pattern, -1))
+            } else {
+                //deprecated in API 26
+                buzzer.vibrate(pattern, -1)
+            }
+        }
+    }
 
+}
     /**
      * Called when the game is finished
-     */
+
     private fun gameFinished() {
         // val action = GameFragmentDirections.actionGameToScore(score)
         // val action = GameFragmentDirections.actionGameToScore(viewModel.score) todo have to change this b/c score is a live data now
         val action = GameFragmentDirections.actionGameToScore(viewModel.score.value ?: 0 ) // says if score is ever null, which it never should be, to pass in 0
-//        acton.setScore(currentScore)
+        // acton.setScore(currentScore)
         findNavController(this).navigate(action)
         Toast.makeText(this.activity, "Game has finished", Toast.LENGTH_SHORT).show()
     }
-
-
+     */
 
     /** Methods for buttons presses **/
 // Moved over to GameViewModel.kt
@@ -162,4 +190,7 @@ class GameFragment : Fragment() {
         binding.scoreText.text = viewModel.score.toString()
     }
      **/
-}
+
+    // Given a pattern, this method will actually perform the buzz.
+    // It uses the activity to get a system service:
+
