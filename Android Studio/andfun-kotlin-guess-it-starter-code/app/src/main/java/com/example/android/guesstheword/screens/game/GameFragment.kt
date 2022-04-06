@@ -82,9 +82,14 @@ class GameFragment : Fragment() {
         //  second is an anonymous observer object, which is essentially the code that is going to get triggered
         //  any time the live data changes
         /** Setting up LiveData observation relationship **/
+
+        /** todo this is removed b/c we are directly referencing it in the text field w/in game_fragment.xml
+         * this is part of the magic of data binding after we added the "binding.setLifecycleOwner(this)"
+         *
         viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
             binding.scoreText.text = newScore.toString()
         })
+        */
 
         /** todo this is removed b/c we are directly referencing it in the text field w/in game_fragment.xml
          * this is part of the magic of data binding after we added the "binding.setLifecycleOwner(this)"
@@ -98,15 +103,10 @@ class GameFragment : Fragment() {
          * this is part of the magic of data binding after we added the "binding.setLifecycleOwner(this)"
          *
         viewModel.currentTime.observe(viewLifecycleOwner, Observer { newTime ->
-            binding.timerText.text = DateUtils.formatElapsedTime(newTime)
+            // binding.timerText.text = DateUtils.formatElapsedTime(newTime) --- use a lambda function in view model to do this instead
 
         })
         */
-
-        viewModel.currentTime.observe(viewLifecycleOwner, Observer { newTime ->
-            binding.timerText.text = DateUtils.formatElapsedTime(newTime)
-
-        })
 
         viewModel.eventGameFinish.observe(viewLifecycleOwner, Observer { hasFinished ->
             if (hasFinished) {
