@@ -56,7 +56,10 @@ class GameFragment : Fragment() {
         Log.i("GameFragment", "Called ViewModelProvider!")
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
 
-        binding.gameViewModel = viewModel
+        // Set the viewmodel for data binding - this allows the bound layout access to all of the
+        // data in the ViewModel
+        binding.gameViewModel = viewModel // binding viewModel to layout
+        binding.setLifecycleOwner(this) // allows us to use data binding to automatically update our layout
 
         /** ON CLICK LISTENERS ARE REMOVED BECAUSE THEY ARE LAMBDAS IN THE XML NOW
         //binding.correctButton.setOnClickListener { onCorrect() }
@@ -83,9 +86,22 @@ class GameFragment : Fragment() {
             binding.scoreText.text = newScore.toString()
         })
 
+        /** todo this is removed b/c we are directly referencing it in the text field w/in game_fragment.xml
+         * this is part of the magic of data binding after we added the "binding.setLifecycleOwner(this)"
+         *
         viewModel.word.observe(viewLifecycleOwner, Observer { newWord ->
             binding.wordText.text = newWord
         })
+        */
+
+        /** todo this is removed b/c we are directly referencing it in the text field w/in game_fragment.xml
+         * this is part of the magic of data binding after we added the "binding.setLifecycleOwner(this)"
+         *
+        viewModel.currentTime.observe(viewLifecycleOwner, Observer { newTime ->
+            binding.timerText.text = DateUtils.formatElapsedTime(newTime)
+
+        })
+        */
 
         viewModel.currentTime.observe(viewLifecycleOwner, Observer { newTime ->
             binding.timerText.text = DateUtils.formatElapsedTime(newTime)
