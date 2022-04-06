@@ -4,7 +4,8 @@ import java.io.Writer
 
 fun main(args: Array<String>) {
     println("1- read \n2- write \n")
-    var op = readLine()!!.toInt()
+    // var op = readLine()!!.toInt()
+    val op = readLine()!!.toInt() // switch to read only
 
     when(op) {
         1 -> ReadFromFile() // ReadFromFile()
@@ -23,9 +24,10 @@ fun main(args: Array<String>) {
 
 fun WriteToFile(str: String) {
     try {
-        var fo = FileWriter("test.txt", true)
+        val fo = FileWriter("test.txt", true)
         fo.write(str+ "\n")
         fo.close()
+        println("Data is saved")
     } catch (ex: Exception) {
         println(ex.message)
     }
@@ -33,7 +35,7 @@ fun WriteToFile(str: String) {
 
 fun ReadFromFile() {
     try {
-        var fin = FileReader("test.txt")
+        val fin = FileReader("test.txt")
         var c:Int? // use to read the character from the file
 
         do {
