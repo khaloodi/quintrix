@@ -7,7 +7,9 @@ fun main(args: Array<String>) {
 
     var t3 = thread("thread3")
     t3.start()
+    t3.join() // waits until thread 3 is done.. then continue
 
+    // Once thread 3 is complete, the following will execute:
     println(" thread is run") // notice this line is run, as well as Thread code ... non-blocking
 }
 
