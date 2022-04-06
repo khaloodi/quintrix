@@ -1,0 +1,3 @@
+when we run this file
+it creates a text file
+each time we run it, and write some text and hit enter... it will add text to a new line at end of test.txt file
