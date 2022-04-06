@@ -32,4 +32,18 @@ fun main(args: Array<String>) {
     for (person in listOfNames2) {
         println("Name: " + person.name + "Age: " + person.age)
     }
+
+    /**
+    Output:
+    Names before sorting:
+    Name: WalterAge: 73
+    Name: NadaAge: 62
+    Name: ZenaAge: 25
+    Name: KhaledAge: 30
+    Names after sorting:
+    Name: ZenaAge: 25
+    Name: KhaledAge: 30
+    Name: NadaAge: 62
+    Name: WalterAge: 73
+     */
 }
