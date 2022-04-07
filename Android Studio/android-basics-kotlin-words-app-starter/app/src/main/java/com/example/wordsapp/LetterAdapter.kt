@@ -73,7 +73,8 @@ class LetterAdapter :
             // The name of the activity you want to show is specified
             // with DetailActivity::class.java. An actual DetailActivity object is created behind the scenes.
             val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra("letter", holder.button.text.toString())
+            // intent.putExtra("letter", holder.button.text.toString())
+            intent.putExtra(DetailActivity.LETTER, holder.button.text.toString()) // using companion object
 
             context.startActivity(intent)
 

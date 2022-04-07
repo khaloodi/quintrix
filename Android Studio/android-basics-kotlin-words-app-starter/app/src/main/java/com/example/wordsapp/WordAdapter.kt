@@ -16,6 +16,8 @@
 package com.example.wordsapp
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -81,6 +83,19 @@ class WordAdapter(private val letterId: String, context: Context) :
 
         // Set the text of the WordViewHolder
         holder.button.text = item
+
+        holder.button.setOnClickListener {
+            // When calling parse() to create a URI from a String, you need to use string
+            // formatting so that the word is appended to the SEARCH_PREFIX
+            val queryUrl: Uri = Uri.parse("${DetailActivity.SEARCH_PREFIX}${item}")
+
+            // Instead of passing in a context and an activity, you pass in Intent.ACTION_VIEW along with the URI
+            val intent = Intent(Intent.ACTION_VIEW, queryUrl)
+
+            // even though you aren't launching any particular activity in your app, you're telling
+            // the system to launch another app, by calling startActivity()and pass in the intent
+            context.startActivity(intent)
+        }
 
     }
     // Setup custom accessibility delegate to set the text read with

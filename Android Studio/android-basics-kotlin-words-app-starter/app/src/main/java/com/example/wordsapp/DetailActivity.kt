@@ -23,6 +23,10 @@ import com.example.wordsapp.databinding.ActivityDetailBinding
 
 
 class DetailActivity : AppCompatActivity() {
+    companion object {
+        const val LETTER = "letter"
+        const val SEARCH_PREFIX = "https://www.google.com/search?q="
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +42,7 @@ class DetailActivity : AppCompatActivity() {
         // so toString() guarantees that the value will be a String
         // val letterId = "A"
         // todo ^ replace the hard coded letter with code to get the letterId passed in from the intent
-        val letterId = intent?.extras?.getString("letter").toString()
+        // val letterId = intent?.extras?.getString("letter").toString() // todo use a companion object instead
         /**
          * First, where does the ^^^ intent property come from? It's not a property of DetailActivity
          * , but rather, a property of any activity. It keeps a reference to the intent used to launch the activity
@@ -46,6 +50,7 @@ class DetailActivity : AppCompatActivity() {
          * The extras property is of type Bundle, and as you might have guessed,
          * provides a way to access all extras passed into the intent
          */
+        val letterId = intent?.extras?.getString(LETTER).toString() // use the companion object
 
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
