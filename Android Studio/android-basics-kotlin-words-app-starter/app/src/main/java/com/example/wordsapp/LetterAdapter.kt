@@ -15,6 +15,7 @@
  */
 package com.example.wordsapp
 
+import android.content.Intent
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -52,7 +53,7 @@ class LetterAdapter :
                 .from(parent.context)
                 .inflate(R.layout.item_view, parent, false)
         // Setup custom accessibility delegate to set the text read
-        layout.accessibilityDelegate = Accessibility
+        layout.accessibilityDelegate = WordAdapter
         return LetterViewHolder(layout)
     }
 
@@ -62,6 +63,35 @@ class LetterAdapter :
     override fun onBindViewHolder(holder: LetterViewHolder, position: Int) {
         val item = list.get(position)
         holder.button.text = item.toString()
+
+        // set the onClickListener for holder.button
+        holder.button.setOnClickListener {
+            // get a reference to the context
+            val context = holder.view.context
+
+            // Create an Intent, passing in the context, as well as the class name of the destination activity.
+            // The name of the activity you want to show is specified
+            // with DetailActivity::class.java. An actual DetailActivity object is created behind the scenes.
+            val intent = Intent(context, DetailActivity::class.java)
+            context.startActivity(intent)
+
+            /**
+             * What's an extra? Remember that an intent is simply a set of instructions—there's no instance
+             * of the destination activity just yet. Instead, an extra is a piece of data, such as a number
+             * or string, that is given a name to be retrieved later. This is similar to passing an argument
+             * when you call a function. Because a DetailActivity can be shown for any letter, you need to
+             * tell it which letter to present.
+
+            Also, why do you think it's necessary to call toString()? The button's text is already a string, right?
+
+            Sort of. It's actually of type CharSequence, which is something called an interface.
+            You don't need to know anything about Kotlin interfaces for now, other than it's a way to
+            ensure a type, such as String, implements specific functions and properties. You can think of
+            a CharSequence as a more generic representation of a string-like class. A button's text property
+            could be a string, or it could be any object that is also a CharSequence. The putExtra() method,
+            however, accepts a String, not just any CharSequence, hence the need to call toString()
+             */
+        }
     }
 
     // Setup custom accessibility delegate to set the text read with
