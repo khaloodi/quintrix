@@ -3,6 +3,8 @@ package com.example.affirmations
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.example.affirmations.adapter.ItemAdapter
 import com.example.affirmations.data.Datasource
 
 class MainActivity : AppCompatActivity() {
@@ -10,12 +12,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val textView: TextView = findViewById(R.id.textview)
+        // val textView: TextView = findViewById(R.id.textview)
+        // textView.text = Datasource().loadAffirmations().size.toString()
 
-        // todo Add code to create and display the size of the affirmations list.
-        //  Create a Datasource, call loadAffirmations(), get the size of the returned list,
-        //  convert it to a string, and assign it as the text of textView
-        textView.text = Datasource().loadAffirmations().size.toString()
+        // Initialize data.
+        val myDataset = Datasource().loadAffirmations()
+
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+        recyclerView.adapter = ItemAdapter(this, myDataset)
+
+        // Use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        recyclerView.setHasFixedSize(true)
 
     }
 }
