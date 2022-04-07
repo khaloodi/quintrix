@@ -4,5 +4,6 @@ fun main() {
     val filteredWords = words.filter { it.startsWith("b", ignoreCase = true) }
         .shuffled()
         .take(2) // You can use the take() function to get the first items in the collection
+        .sorted()
     println(filteredWords)
 }
