@@ -1844,6 +1844,10 @@ id disableHome
 id disablePostScroll
 id disableScroll
 id disjoint
+id dog_age
+id dog_hobbies
+id dog_name
+id dog_pic
 id dragDown
 id dragEnd
 id dragLeft
@@ -2328,6 +2332,7 @@ string chip_text
 string clear_text_end_icon_content_description
 string dog_age
 string dog_hobbies
+string dog_name
 string error_icon_content_description
 string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior

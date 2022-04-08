@@ -1,4 +1,4 @@
-#Thu Apr 07 21:34:43 CDT 2022
+#Fri Apr 08 12:10:47 CDT 2022
 base.1=/Users/khaledadad/Desktop/quintrix/Android Studio/android-basics-kotlin-dogglers-app-main/app/build/intermediates/dex/debug/mergeProjectDexDebug/classes.dex
 path.1=classes.dex
 base.0=/Users/khaledadad/Desktop/quintrix/Android Studio/android-basics-kotlin-dogglers-app-main/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
