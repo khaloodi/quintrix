@@ -19,6 +19,7 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dogglers.model.Dog
 
 /**
  * Adapter to inflate the appropriate list item layout and populate the view with information

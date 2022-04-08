@@ -36,6 +36,12 @@
                The height should be 194dp
                The width should match the with of the card
                The scaleType should be set to centerCrop-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="194dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/tzeitel"
+            />
 
         <!-- TODO: Create a TextView for each of the following:
                 The dog's name
