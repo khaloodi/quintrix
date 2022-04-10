@@ -87,7 +87,7 @@ class WordAdapter(private val letterId: String, context: Context) :
         holder.button.setOnClickListener {
             // When calling parse() to create a URI from a String, you need to use string
             // formatting so that the word is appended to the SEARCH_PREFIX
-            val queryUrl: Uri = Uri.parse("${DetailActivity.SEARCH_PREFIX}${item}")
+            val queryUrl: Uri = Uri.parse("${WordListFragment.SEARCH_PREFIX}${item}")
 
             // Instead of passing in a context and an activity, you pass in Intent.ACTION_VIEW along with the URI
             val intent = Intent(Intent.ACTION_VIEW, queryUrl)

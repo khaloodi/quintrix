@@ -74,7 +74,7 @@ class LetterAdapter :
             // with DetailActivity::class.java. An actual DetailActivity object is created behind the scenes.
             val intent = Intent(context, DetailActivity::class.java)
             // intent.putExtra("letter", holder.button.text.toString())
-            intent.putExtra(DetailActivity.LETTER, holder.button.text.toString()) // using companion object
+            intent.putExtra(WordListFragment.LETTER, holder.button.text.toString()) // using companion object
 
             context.startActivity(intent)
 
