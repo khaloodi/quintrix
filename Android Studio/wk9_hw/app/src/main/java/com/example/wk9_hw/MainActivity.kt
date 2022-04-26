@@ -23,10 +23,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         var view = binding.root
 
-        setContentView(R.layout.activity_main)
+        setContentView(view)
 
         view.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(view: View?, m: MotionEvent?): Boolean {
+            override fun onTouch(view: View, m: MotionEvent): Boolean {
                 Log.i(TAG, "Entered onTouch()")
                 handleTouch(m)
                 return true
@@ -35,17 +35,17 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun handleTouch(m: MotionEvent?) {
+    private fun handleTouch(m: MotionEvent) {
         Log.d(TAG, "Entered handleTouch()")
 
-        val pointerCount = m?.pointerCount
-        for (i in 0..pointerCount!!) {
+        val pointerCount = m.pointerCount
+        for (i in 0 until pointerCount) {
             val x = m.getX(i)
             val y = m.getY(i)
 
             val id = m.getPointerId(i)
             val action = m.actionMasked
-            val actionString : String
+            val actionString: String
 
             when (action) {
                 MotionEvent.ACTION_MOVE -> {
@@ -57,30 +57,28 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+
+            binding.textStatus.text = commonData.getImageDescriptionAtIndex(index)
+
+            GlobalScope.launch(Dispatchers.IO) {
+                val imageUrl = URL(commonData.getImageUrlAtIndex(index))
+                val httpConnection: HttpURLConnection =
+                    imageUrl.openConnection() as HttpURLConnection
+                httpConnection.doInput = true
+                httpConnection.connect()
+
+                Log.i(
+                    TAG,
+                    "Making http connection ... connect(). response code: ${httpConnection.responseCode}"
+                )
+
+                val inputStream = httpConnection.inputStream
+                val bitmapImage = BitmapFactory.decodeStream(inputStream)
+                launch(Dispatchers.Main) {
+                    Log.i("UI", "thread ${Thread.currentThread().name} is setting the image")
+                    binding.imageView.setImageBitmap(bitmapImage)
+                }
+            }
         }
-
-        binding.textStatus.text = photos.getImageDescriptionAtIndex(index)
-
-        GlobalScope.launch(Dispatchers.io) {
-            val imageUrl = URL(photos.getImageUrlAtIndex(index))
-            val httpConnection: HttpURLConnection = imageUrl.openConnection() as HttpURLConnection
-            httpConnection.doInput = true
-            httpConnection.connect()
-
-            Log.i(
-                TAG,
-                "Making http connection ... connect(). response code: ${httpConnection.responseCode}"
-            )
-
-            val inputStream = httpConnection.inputStream
-            val bitmapImage = BitmapFactory.decodeStream(inputStream)
-            launch(Dispatchers.Main) {
-                Log.i("UI", "thread ${Thread.currentThread().name} is setting the image")
-                binding.imageView.setImageBitmap(bitmapImage)
-
-
-        }
-
-
     }
 }
